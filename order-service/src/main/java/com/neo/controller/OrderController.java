@@ -4,6 +4,7 @@ import com.neo.entity.Order;
 import com.neo.entity.ResponseMessage;
 import com.neo.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,8 +13,16 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
+    DiscoveryClient discoveryClient;
+    @Autowired
     OrderMapper orderMapper;
 
+    @GetMapping("/dc")
+    public String dc() {
+        String services = "Services: " + discoveryClient.getServices();
+        System.out.println(services);
+        return services;
+    }
 
     //新建订单
     @RequestMapping(path = "/order",method = RequestMethod.POST)
