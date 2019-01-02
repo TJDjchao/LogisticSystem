@@ -53,11 +53,27 @@ public class OrderController {
         }
     }
 
+    //取消订单
+    @RequestMapping(path = "/dorder",method = RequestMethod.DELETE)
+    public ResponseMessage cancelOrder(@RequestParam(value = "BILL_ID",required = false)Long bill_id) {
+            if(orderMapper.cancelOrder(bill_id)==1){
+                return new ResponseMessage<>(null).success();
+            }
+            return new ResponseMessage<>(null).error(202,"fail to cancel order");
+    }
+
 
     //查看订单
     @RequestMapping(path = "/order",method = RequestMethod.GET)
     public ResponseMessage getOrder(@RequestParam(value = "ACCOUNT_ID",required = false)Long account_id){
         List<Order> orders=orderMapper.getOrder(account_id);
+        return new ResponseMessage<>(orders).success();
+    }
+
+    //搜索订单
+    @RequestMapping(path = "/orders",method = RequestMethod.GET)
+    public ResponseMessage searchOrder(@RequestParam(value = "BILL_ID",required = false)Long bill_id){
+        List<Order> orders=orderMapper.searchOrder(bill_id);
         return new ResponseMessage<>(orders).success();
     }
 
