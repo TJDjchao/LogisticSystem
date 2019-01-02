@@ -9,7 +9,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 @MapperScan("com.neo.mapper")
 public class OrderService {
-
 	public static void main(String[] args) {
 		SpringApplication.run(OrderService.class, args);
 	}
