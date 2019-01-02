@@ -1,9 +1,7 @@
 package com.neo.mapper;
 
 import com.neo.entity.Account;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,5 +21,9 @@ public interface AccountMapper {
     //登录
     @Select("SELECT COUNT( ACCOUNT_ID ) FROM ACCOUNT a WHERE ACCOUNT_ID =#{ACCOUNT_ID} AND PASSWORD = #{PASSWORD}")
     int login(Account account);
+
+    //更改密码
+    @Update("UPDATE ACCOUNT SET PASSWORD=#{PASSWORD} WHERE ACCOUNT_ID=#{ACCOUNT_ID}")
+    int changePassword(Account account);
 
 }

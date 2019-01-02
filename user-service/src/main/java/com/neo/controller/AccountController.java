@@ -41,4 +41,12 @@ public class AccountController {
         return new ResponseMessage<>(null).error(202,"login failed");
     }
 
+    //更改密码
+    @RequestMapping(path = "/account",method = RequestMethod.POST)
+    public ResponseMessage changePassword(@RequestBody Account account){
+        if(accountMapper.changePassword(account)==1){
+            return new ResponseMessage<>(null).success();
+        }
+        return new ResponseMessage<>(null).error(202,"fail to change password");
+    }
 }
