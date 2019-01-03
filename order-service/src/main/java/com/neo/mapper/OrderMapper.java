@@ -33,8 +33,8 @@ public interface OrderMapper {
     List<Order> searchOrder(@Param(value = "bill_id")Long bill_id);
 
     //更新订单
-    @Insert("INSERT INTO BILLSTATE VALUES(#{BILL_ID},#{SITE_ID},#{TIME},#{STATE})")
-    int updateOrder(Order order);
+    @Insert("INSERT INTO BILLSTATE VALUES(#{bill_id},#{site_id},#{time},#{state})")
+    int updateOrder(@Param(value = "bill_id")Long bill_id,@Param(value = "site_id")Long site_id,@Param(value = "time")Date time,@Param(value = "state")Long state);
 
 
 

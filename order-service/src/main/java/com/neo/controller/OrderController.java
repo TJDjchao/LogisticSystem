@@ -8,6 +8,9 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.text.ParseException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 @RestController
 public class OrderController {
@@ -33,24 +36,26 @@ public class OrderController {
         return new ResponseMessage<>(null).error(202,"fail to add new order");
     }
 
-    //更新订单
+    //完善订单
     //state 的值为0/1, 0 代表完善订单操作，1 代表更新订单操作
     @RequestMapping(path = "/order",method = RequestMethod.PUT)
-    public ResponseMessage updateOrder(@RequestBody Order order,@RequestParam(value = "state")Integer state) {
+    public ResponseMessage perfectOrder(@RequestBody Order order) {
         //完善订单，添加 FEE（费用） 和 WEIGHT（重量）
-        if(state==0){
             if(orderMapper.perfectOrder(order)==1){
                 return new ResponseMessage<>(null).success();
             }
             return new ResponseMessage<>(null).error(202,"fail to perfect order");
+    }
+
+
+    //更新订单
+    @RequestMapping(path = "/orderstate",method = RequestMethod.GET)
+    public ResponseMessage updateOrder(@RequestParam(value = "bill_id",required = false)Long bill_id,@RequestParam(value = "site_id",required = false)Long site_id,@RequestParam(value = "state",required = false)Long state){
+        Date time1=new Date();
+        if(orderMapper.updateOrder(bill_id,site_id,time1,state)==1){
+            return new ResponseMessage<>(null).success();
         }
-        //更新订单，更新状态
-        else{
-            if(orderMapper.updateOrder(order)==1){
-                return new ResponseMessage<>(null).success();
-            }
-            return new ResponseMessage<>(null).error(202,"fail to update order");
-        }
+        return new ResponseMessage<>(null).error(202,"fail to update order");
     }
 
     //取消订单
